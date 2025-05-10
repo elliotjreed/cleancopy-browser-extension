@@ -1,0 +1,33 @@
+{
+  "name": "clean-copy-browser-extension",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "author": "Elliot J. Reed",
+  "description": "Browser extension for cleaning and normalising copied text, particularly text outputted by AI LLMs such as ChatGPT, Claude, Gemini, and DeepSeek.",
+  "license": "MIT",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "build:firefox": "BROWSER=firefox webpack",
+    "build:chrome": "BROWSER=chrome webpack",
+    "watch": "webpack --watch",
+    "watch:firefox": "BROWSER=firefox webpack --watch",
+    "watch:chrome": "BROWSER=chrome webpack --watch",
+    "start:firefox": "npm run build:firefox && web-ext run --source-dir ./dist/",
+    "start:chrome": "npm run build:chrome && web-ext run --source-dir ./dist/ --target chromium",
+    "sign": "web-ext sign",
+    "package:firefox": "npm run build:firefox && web-ext build --overwrite-dest --source-dir ./dist/",
+    "package:chrome": "npm run build:chrome && web-ext build --overwrite-dest --source-dir ./dist/"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.321",
+    "@types/firefox-webext-browser": "^120.0.4",
+    "prettier": "^3.5.3",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "web-ext": "^8.6.0",
+    "webpack": "^5.99.8",
+    "webpack-cli": "^6.0.1"
+  }
+}
