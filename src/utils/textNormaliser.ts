@@ -41,51 +41,6 @@ const removeHiddenCharacters = (text: string): string => {
   return text.replace(/[\u00AD\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFE00-\uFE0F\uFEFF]/g, "");
 };
 
-const cleanNonStandardCharacters = (text: string): string => {
-  // This regex pattern aims to keep:
-  // - ASCII printable characters (0x20-0x7E)
-  // - Emoji characters (mostly in Supplementary Multilingual Plane and above)
-  // - Common whitespace and newlines
-
-  // This is complex because we want to KEEP emojis which are in high Unicode ranges
-  // while removing other non-ASCII characters
-
-  const characters: string[] = [...text];
-
-  return characters
-    .filter((character: string): boolean => {
-      const code = character.codePointAt(0) as number;
-
-      // Keep ASCII printable characters (including space)
-      if (code >= 0x20 && code <= 0x7e) {
-        return true;
-      }
-
-      // Keep common whitespace and newlines
-      if (character === "\n" || character === "\r" || character === "\t") {
-        return true;
-      }
-
-      // Keep emojis (a simplified check - not exhaustive)
-      // Most emojis are in ranges:
-      // - Emoticons: 0x1F600-0x1F64F
-      // - Misc symbols and pictographs: 0x1F300-0x1F5FF
-      // - Transport and map symbols: 0x1F680-0x1F6FF
-      // - Supplemental symbols and pictographs: 0x1F900-0x1F9FF
-      if (
-        (code >= 0x1f300 && code <= 0x1f64f) ||
-        (code >= 0x1f680 && code <= 0x1f6ff) ||
-        (code >= 0x1f900 && code <= 0x1f9ff) ||
-        (code >= 0x2600 && code <= 0x26ff)
-      ) {
-        return true;
-      }
-
-      return false;
-    })
-    .join("");
-};
-
 export const normaliseText = (text: string): string => {
   let result: string = text;
 
@@ -99,5 +54,5 @@ export const normaliseText = (text: string): string => {
 
   result = removeHiddenCharacters(result);
 
-  return cleanNonStandardCharacters(result);
+  return result;
 };
