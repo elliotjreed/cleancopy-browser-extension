@@ -8,7 +8,6 @@ A browser extension that normalises and cleans text when copying. It adds a righ
 - **Dash Normalisation**: Converts all dash variations (em, en, figure dash, horizontal bar) to hyphen (U+2012–U+2015, U+2212)
 - **Quote Normalisation**: Normalises smart and typographic quotes to standard ASCII (' and ") (U+2018–U+201F, U+2032–U+2036, U+00AB, U+00BB)
 - **Punctuation Normalisation**: Converts ellipsis and bullets to standard punctuation, normalises full-width punctuation (U+2026, U+2022, U+00B7, U+FF01–U+FF5E)
-- **Character Cleaning**: Removes non-standard keyboard characters while preserving standard ASCII and emojis
 - **Hidden Character Removal**: Removes all hidden characters like soft hyphens, zero-width spaces, ZWJ, ZWNJ, bidi controls, variation selectors (U+00AD, U+180E, U+200B–U+200F, U+202A–U+202E, U+2060–U+206F, U+FE00–U+FE0F, U+FEFF)
 
 ## Inspiration
