@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CleanCopy",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Cleans and normalises copied text, particularly text outputted by AI LLMs such as ChatGPT, Claude, Gemini, and DeepSeek.",
   "permissions": [
     "contextMenus",

@@ -1,6 +1,6 @@
 {
   "name": "clean-copy-browser-extension",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "commonjs",
   "author": "Elliot J. Reed",
   "description": "Browser extension for cleaning and normalising copied text, particularly text outputted by AI LLMs such as ChatGPT, Claude, Gemini, and DeepSeek.",
@@ -17,8 +17,8 @@
     "start:firefox": "npm run build:firefox && web-ext run --source-dir ./dist/",
     "start:chrome": "npm run build:chrome && web-ext run --source-dir ./dist/ --target chromium",
     "sign": "web-ext sign",
-    "package:firefox": "npm run build:firefox && web-ext build --overwrite-dest --source-dir ./dist/",
-    "package:chrome": "npm run build:chrome && web-ext build --overwrite-dest --source-dir ./dist/",
+    "package:firefox": "npm run build:firefox && web-ext build --overwrite-dest --source-dir ./dist/ --filename firefox-{name}-{version}.zip",
+    "package:chrome": "npm run build:chrome && web-ext build --overwrite-dest --source-dir ./dist/ --filename chrome-{name}-{version}.zip",
     "test": "vitest run --coverage.enabled"
   },
   "devDependencies": {

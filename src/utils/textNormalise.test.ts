@@ -28,13 +28,13 @@ describe("normaliseText", (): void => {
       // Test each Unicode dash character individually
       expect(normaliseText("test\u2012test")).toBe("test-test");
       expect(normaliseText("test\u2013test")).toBe("test-test");
-      expect(normaliseText("test\u2014test")).toBe("test-test");
+      expect(normaliseText("test\u2014test")).toBe("test - test");
       expect(normaliseText("test\u2015test")).toBe("test-test");
       expect(normaliseText("test\u2212test")).toBe("test-test");
 
       // Test a string with multiple different dashes
       const textWithMixedDashes = "range\u2012of\u2013items\u2014here\u2015and\u2212there";
-      expect(normaliseText(textWithMixedDashes)).toBe("range-of-items-here-and-there");
+      expect(normaliseText(textWithMixedDashes)).toBe("range-of-items - here-and-there");
     });
 
     it("should not modify standard hyphens", (): void => {
@@ -73,7 +73,8 @@ describe("normaliseText", (): void => {
       expect(normaliseText("test\u2026test")).toBe("test...test");
     });
 
-    it("should convert bullets to asterisks", (): void => {
+    // Unsure how helpful it is (for non-developers especially) to clean bullet points
+    it.skip("should convert bullets to asterisks", (): void => {
       expect(normaliseText("test\u2022test")).toBe("test*test");
       expect(normaliseText("test\u00B7test")).toBe("test*test");
     });
@@ -91,7 +92,7 @@ describe("normaliseText", (): void => {
 
     it("should handle a mix of different punctuation", (): void => {
       const mixedPunctuationText = "Items\u2022 to review\u2026 Check the results\uFF01";
-      expect(normaliseText(mixedPunctuationText)).toBe("Items* to review... Check the results!");
+      expect(normaliseText(mixedPunctuationText)).toBe("Items• to review... Check the results!");
     });
   });
 
@@ -151,7 +152,7 @@ describe("normaliseText", (): void => {
         "Smart\u2019s \u201CQuotes\u201D and\u00A0spaces\u2014dashes\u2026ellipsis\u2022bullets\uFF01full-width\u200Bhidden";
 
       // Expected result after all normalisation functions are applied
-      const expectedResult = 'Smart\'s "Quotes" and spaces-dashes...ellipsis*bullets!full-widthhidden';
+      const expectedResult = 'Smart\'s "Quotes" and spaces - dashes...ellipsis•bullets!full-widthhidden';
 
       expect(normaliseText(complexText)).toBe(expectedResult);
     });
@@ -170,7 +171,7 @@ describe("normaliseText", (): void => {
       expect(normaliseText("text\u00A0with\u3000spaces")).toBe("text with spaces");
 
       // Only dashes to normalise
-      expect(normaliseText("text\u2014with\u2013dashes")).toBe("text-with-dashes");
+      expect(normaliseText("text\u2014with\u2013dashes")).toBe("text - with-dashes");
 
       // Only quotes to normalise
       expect(normaliseText("text\u201Cwith\u2019quotes")).toBe("text\"with'quotes");
@@ -189,7 +190,7 @@ describe("normaliseText", (): void => {
 
       // Mixed with regular text
       const mixedText = "a\u00A0b\u2014c\u201Cd\u2026e\u200Bf";
-      expect(normaliseText(mixedText)).toBe('a b-c"d...ef');
+      expect(normaliseText(mixedText)).toBe('a b - c"d...ef');
     });
 
     it("should handle real-world examples with multiple character types", (): void => {
@@ -207,7 +208,7 @@ describe("normaliseText", (): void => {
       // Text with fancy typography from a design app
       const typographyText =
         "Design\u2014Typography\u2014Layout\u00A0\u00A0\u00A0\u2022\u00A0\u00A0\u00A0Color\u00A0\u00A0\u00A0\u2022\u00A0\u00A0\u00A0Imagery";
-      expect(normaliseText(typographyText)).toBe("Design-Typography-Layout   *   Color   *   Imagery");
+      expect(normaliseText(typographyText)).toBe("Design - Typography - Layout   •   Color   •   Imagery");
     });
   });
 

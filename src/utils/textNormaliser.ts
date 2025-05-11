@@ -5,7 +5,16 @@ const normaliseSpaces = (text: string): string => {
 
 const normaliseDashes = (text: string): string => {
   // Dash variations: U+2012–U+2015 (figure dash, en dash, em dash, horizontal bar), U+2212 (minus)
-  return text.replace(/[\u2012-\u2015\u2212]/g, "-");
+  // Replace em dashes with a hyphen with a space either side, where the original em dash does not already have a space both sides
+  return text
+    .replace(/(\S)\u2014(\S)|( \u2014 )/g, function (match, p1, p2, p3): string {
+      if (p1) {
+        return p1 + " - " + p2;
+      } else {
+        return " - ";
+      }
+    })
+    .replace(/[\u2012-\u2015\u2212]/g, "-");
 };
 
 const normaliseQuotes = (text: string): string => {
@@ -19,14 +28,10 @@ const normaliseQuotes = (text: string): string => {
 };
 
 const normalisePunctuation = (text: string): string => {
-  // Ellipsis, bullets, and full-width punctuation normalization
+  // Ellipsis and full-width punctuation normalization
   return text
     .replace(/\u2026/g, "...") // Ellipsis: U+2026
-    .replace(/[\u2022\u00B7]/g, "*") // Bullets: U+2022, U+00B7
-    .replace(/[\uFF01-\uFF5E]/g, (char) => {
-      // Full-width punctuation: U+FF01–U+FF5E
-      return String.fromCharCode(char.charCodeAt(0) - 0xfee0);
-    });
+    .replace(/[\uFF01-\uFF5E]/g, (char: string): string => String.fromCharCode(char.charCodeAt(0) - 0xfee0)); // Full-width punctuation: U+FF01–U+FF5E
 };
 
 const removeHiddenCharacters = (text: string): string => {
